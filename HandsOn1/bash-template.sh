@@ -1,23 +1,27 @@
 #!/bin/bash
 ####TO DO: FILL IN SLURM PARAMETERS FOR FOLLOWING ITEMS####
-#SBATCH #account
-#SBATCH #partition
-#SBATCH #time
-#SBATCH #number of cpus
-#SBATCH #amount of memory
-#SBATCH #standard output file
-#SBATCH #standard err file
+#SBATCH --account=
+#SBATCH --partition=
+#SBATCH --time=
+#SBATCH --ntasks=
+#SBATCH --mem=
+#SBATCH -o
+#SBATCH -e
 
-#creation of scratch directory
+#creation of working directory (SCRDIR) and staging files for analysis
 SCRDIR=/scratch/general/nfs1/$USER/$SLURM_JOB_ID
 mkdir -p $SCRDIR
 
-####TO DO: COPY INPUT FILES TO $SCRDIR####
+cp data_visualization.r iris.csv $SCRDIR
+cd $SCRDIR
 
-####TO DO: CHANGE DIRECTORIES TO $SCRDIR####
+#loading the latest R module
+module load R
 
-####TO DO: LOAD THE LATEST R MODULE####
+#Running the Rscript 'data_visualition.r' to create a graph using the data 'iris.csv'
+Rscript data_visualization.r iris.csv
 
-####TO DO: RUN THE R SCRIPT WITH DATA SHEET *hint, it beings with 'Rscript'####
-
-####TO DO: COPY OVER OUTPUT FILE 'IrisData.png' TO $HOME AND REMOVE $SCRDIR####
+#copying expected output 'IrisData.png' back to $HOME (permanent storage) and cleaning up $SCRDIR
+cp IrisData.png $HOME/slurm-lecture/HandsOn1
+cd $HOME
+rm -rf $SCRDIR

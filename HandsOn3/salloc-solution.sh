@@ -1,4 +1,4 @@
-salloc --account=<account-name> --partition=kingspeak-shared --time=00:10:00
+salloc --account=owner-guest --partition=notchpeak-guest --qos=notchpeak-guest --time=00:05:00 --ntasks=1 --mem=15G
 
 #once job begins and you are ssh'd into the interactive node, do this:
 
